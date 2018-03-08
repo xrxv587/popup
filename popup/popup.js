@@ -66,8 +66,8 @@
     // 取消按钮
     cancelBtn = new Dom({element: 'button', classList: 'popupCancel', innerHtml: '取消'});
     cancelBtn.element.onclick = function () {
-        var popupMask = document.getElementsByClassName('popupMask')[0];
-        document.body.removeChild(popupMask);
+        var popupMaskDom = document.getElementsByClassName('popupMask')[0];
+        document.body.removeChild(popupMaskDom);
         stopBubble();
     }
     // 确认窗口按钮组
@@ -109,9 +109,9 @@
     // close方法
     var closeHandler = function (callback) {
         var targetDom = window.event.target;
-        if (targetDom == closeIcon.element || targetDom == popupMask || targetDom == okBtn.element) {
-            var popupMask = document.getElementsByClassName('popupMask')[0];
-            document.body.removeChild(popupMask);
+        if (targetDom == closeIcon.element || targetDom == popupMask.element || targetDom == okBtn.element) {
+            var popupMaskDom = document.getElementsByClassName('popupMask')[0];
+            document.body.removeChild(popupMaskDom);
         }
         stopBubble();
     }
