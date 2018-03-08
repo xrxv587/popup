@@ -86,7 +86,7 @@
         // 弹出确认框
         if (config.type = popType.confirm) {
             tips.element.innerHTML = '提示';
-            config.text ? confirm.element.innerHTML = config.text : confirm.element.innerHTML = '';
+            config.text ? content.element.innerHTML = config.text : content.element.innerHTML = '';
             confirm.element.appendChild(title.element);
             confirm.element.appendChild(content.element);
             confirm.element.appendChild(confirmBtns.element);
