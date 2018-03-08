@@ -8,6 +8,11 @@
         confirm: 'confirm'
     }
     var ani = null;
+    // 阻止事件冒泡
+    function stopBubble () {
+        window.event.stopPropagation = true;
+        window.event.cancelBubble = true;
+    }
 
     // Dom类
     var Dom = (function () {
@@ -33,8 +38,7 @@
             }
             if (config.id) {
                 this.element.id = config.id;
-            }
-            
+            } 
         }
         return Dom;
     }());
@@ -64,27 +68,58 @@
     cancelBtn.element.onclick = function () {
         var popupMask = document.getElementsByClassName('popupMask')[0];
         document.body.removeChild(popupMask);
+        stopBubble();
     }
     // 确认窗口按钮组
     confirmBtns = new Dom({element: 'div', classList: 'popupBtns'});
     confirmBtns.element.appendChild(okBtn.element);
     confirmBtns.element.appendChild(cancelBtn.element);
-
-    // 弹窗方法
-    var popup = function (config, cb) {
+    
+    // show方法
+    var showHandler = function (config) {
+        /**
+         * config.type-'warn' 'error' 'default' 'confirm'
+         * config.callback 确认按钮动作回调方法
+         */
+        confirm.element.style.transform = 'scale(0, 0)';
+        // 弹出确认框
         if (config.type = popType.confirm) {
             tips.element.innerHTML = '提示';
             confirm.element.appendChild(title.element);
             confirm.element.appendChild(content.element);
             confirm.element.appendChild(confirmBtns.element);
-            confirm.element.style.transform = 'scale(0, 0)';
         }
+
+        // 向DOM树添加popup并显示
         popupMask.element.appendChild(confirm.element);
         document.body.appendChild(popupMask.element);
+        clearTimeout(ani);
         ani = setTimeout(function () {
             document.getElementById('popup').style.transform = 'scale(1, 1)';
+            // 绑定事件
+            document.getElementById('popup').childNodes[2].childNodes[0].onclick = function () {
+                if (config.callback && config.callback instanceof Function) {
+                    config.callback();
+                }
+                closeHandler();
+                stopBubble();
+            };
         }, 100);
+    }
+    // close方法
+    var closeHandler = function (callback) {
+        var popupMask = document.getElementsByClassName('popupMask')[0];
+        document.body.removeChild(popupMask);
+        stopBubble();
+    }
+    popupMask.element.onclick = closeHandler;
+    closeIcon.element.onclick = closeHandler;
+    // 弹窗方法
+    var popup = {
+        show: showHandler,
+        close: closeHandler
     }
 
     w.popup = popup;
+    
 })(window);

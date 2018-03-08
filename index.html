@@ -96,4 +96,14 @@
     <button onclick="popup('confirm')">点我</button>
 </body>
 <script src="./popup/index.js"></script>
+<script>
+    document.getElementsByTagName('button')[0].onclick = function () {
+        popup.show({
+            type: 'confirm',
+            callback: function () {
+                console.log(112233)
+            }
+        });
+    }
+</script>
 </html>
