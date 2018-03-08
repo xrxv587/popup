@@ -108,8 +108,11 @@
     }
     // close方法
     var closeHandler = function (callback) {
-        var popupMask = document.getElementsByClassName('popupMask')[0];
-        document.body.removeChild(popupMask);
+        var targetDom = window.event.target;
+        if (targetDom == closeIcon.element || targetDom == popupMask || targetDom == okBtn.element) {
+            var popupMask = document.getElementsByClassName('popupMask')[0];
+            document.body.removeChild(popupMask);
+        }
         stopBubble();
     }
     popupMask.element.onclick = closeHandler;
