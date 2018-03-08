@@ -16,6 +16,7 @@
     document.getElementsByTagName('button')[0].onclick = function () {
         popup.show({
             type: 'confirm',
+            text: '我是弹窗内容',
             callback: function () {
                 alert('你点了确认按钮')
             }

@@ -60,7 +60,7 @@
     title.element.appendChild(tips.element);
     title.element.appendChild(closeIcon.element);
     // 内容dom
-    content = new Dom({element: 'div', classList: 'popupContent', innerHtml: '这里是提示内容'});
+    content = new Dom({element: 'div', classList: 'popupContent'});
     // 确认按钮
     okBtn = new Dom({element: 'button', classList: 'popupConfirm', innerHtml: '确定'});
     // 取消按钮
@@ -80,11 +80,13 @@
         /**
          * config.type-'warn' 'error' 'default' 'confirm'
          * config.callback 确认按钮动作回调方法
+         * config.text 弹窗提示内容
          */
         confirm.element.style.transform = 'scale(0, 0)';
         // 弹出确认框
         if (config.type = popType.confirm) {
             tips.element.innerHTML = '提示';
+            config.text ? confirm.element.innerHTML = config.text : confirm.element.innerHTML = '';
             confirm.element.appendChild(title.element);
             confirm.element.appendChild(content.element);
             confirm.element.appendChild(confirmBtns.element);
